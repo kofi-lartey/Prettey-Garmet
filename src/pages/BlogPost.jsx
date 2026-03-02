@@ -1,8 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiCalendar, FiUser, FiArrowLeft, FiArrowRight, FiPlay, FiImage } from 'react-icons/fi';
+import { FiCalendar, FiUser, FiArrowLeft, FiArrowRight, FiPlay, FiImage, FiYoutube } from 'react-icons/fi';
 import useBlogs from '../hooks/useBlogs';
+
+// Helper function to extract YouTube video ID
+const getYouTubeId = (url) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+};
+
+// Component to render content with embedded YouTube videos
+const ContentRenderer = ({ content }) => {
+    if (!content) return null;
+
+    // Split content by YouTube links
+    const parts = content.split(/(https?:\/\/[^\s]+\.(?:youtube\.com|youtu\.be)[^\s]*)/gi);
+
+    return (
+        <div className="space-y-4">
+            {parts.map((part, index) => {
+                const youtubeId = getYouTubeId(part);
+
+                if (youtubeId) {
+                    return (
+                        <div key={index} className="my-8">
+                            <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
+                                <iframe
+                                    src={`https://www.youtube.com/embed/${youtubeId}`}
+                                    title="YouTube video"
+                                    className="w-full h-full"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                />
+                            </div>
+                        </div>
+                    );
+                }
+
+                // Regular text content
+                return part.split('\n').map((line, i) => (
+                    <p key={`${index}-${i}`} className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                        {line}
+                    </p>
+                ));
+            })}
+        </div>
+    );
+};
 
 const BlogPost = () => {
     const { id } = useParams();
@@ -151,9 +199,7 @@ const BlogPost = () => {
                         )}
                         <div className="prose prose-lg max-w-none">
                             {blog.content ? (
-                                <div className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-                                    {blog.content}
-                                </div>
+                                <ContentRenderer content={blog.content} />
                             ) : (
                                 <p className="text-gray-500">No content available for this post.</p>
                             )}

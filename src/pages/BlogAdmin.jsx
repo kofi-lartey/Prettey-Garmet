@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiPlus, FiEdit2, FiTrash2, FiImage, FiX, FiSave, FiArrowLeft, FiPlay } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiImage, FiX, FiSave, FiArrowLeft, FiPlay, FiYoutube } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import useBlogs from '../hooks/useBlogs';
 
@@ -106,6 +106,28 @@ const BlogAdmin = () => {
     // Remove video from array
     const removeVideo = (index) => {
         setFormData(prev => ({ ...prev, videos: prev.videos.filter((_, i) => i !== index) }));
+    };
+
+    // Insert video link into content at cursor position
+    const insertVideo = () => {
+        const videoUrl = window.prompt('Enter YouTube video URL:');
+        if (videoUrl) {
+            setFormData(prev => ({
+                ...prev,
+                content: prev.content + '\n\n' + videoUrl + '\n\n'
+            }));
+        }
+    };
+
+    // Insert image into content at cursor position
+    const insertImage = () => {
+        const imageUrl = window.prompt('Enter image URL:');
+        if (imageUrl) {
+            setFormData(prev => ({
+                ...prev,
+                content: prev.content + '\n\n' + imageUrl + '\n\n'
+            }));
+        }
     };
     const openCloudinaryWidget = () => {
         setIsUploading(true);
@@ -300,12 +322,43 @@ const BlogAdmin = () => {
                                     <label className="block text-gray-600 mb-2 text-sm font-medium">
                                         Full Content
                                     </label>
+
+                                    {/* Toolbar */}
+                                    <div className="flex gap-2 mb-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => insertVideo()}
+                                            className="flex items-center gap-2 px-3 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors"
+                                        >
+                                            <FiYoutube size={16} /> Add Video
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => insertImage()}
+                                            className="flex items-center gap-2 px-3 py-2 bg-[#D4AF37] text-white rounded-lg text-sm hover:bg-[#B8962E] transition-colors"
+                                        >
+                                            <FiImage size={16} /> Add Image
+                                        </button>
+                                    </div>
+
                                     <textarea
                                         value={formData.content}
                                         onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                        className="input-field min-h-[200px]"
-                                        placeholder="Write your full blog content here..."
+                                        className="input-field min-h-[300px]"
+                                        placeholder="Write your full blog content here...
+
+You can paste YouTube video links anywhere in the text, or use the buttons above to insert them.
+
+Example:
+Check out this tutorial:
+https://www.youtube.com/watch?v=VIDEO_ID
+
+And here's another video:
+https://youtu.be/ANOTHER_VIDEO"
                                     />
+                                    <p className="text-gray-400 text-xs mt-2">
+                                        💡 Tip: Paste YouTube links anywhere in the content and they'll automatically become videos
+                                    </p>
                                 </div>
 
                                 {/* Image Upload */}
