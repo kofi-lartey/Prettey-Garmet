@@ -12,6 +12,8 @@ import Booking from './pages/Booking';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Blog from './pages/Blog';
+import BlogAdmin from './pages/BlogAdmin';
+import BlogPost from './pages/BlogPost';
 
 const ScrollToTopOnRouteChange = () => {
   const { pathname } = useLocation();
@@ -37,6 +39,8 @@ const AnimatedRoutes = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog-admin" element={<BlogAdmin />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </AnimatePresence>
   );
