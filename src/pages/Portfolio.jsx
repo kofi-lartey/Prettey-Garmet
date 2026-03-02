@@ -28,7 +28,7 @@ const Portfolio = () => {
                             Portfolio <span className="italic text-[#D4AF37]">Gallery</span>
                         </h1>
                         <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-                            Explore our collection of stunning makeup looks from weddings, photoshoots, and special events.
+                            Explore our collection of stunning looks across makeup, lip gloss, nails, and hair services.
                         </p>
                     </motion.div>
                 </div>
@@ -45,8 +45,8 @@ const Portfolio = () => {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${activeFilter === filter.id
-                                        ? 'bg-[#D4AF37] text-white shadow-lg'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]'
+                                    ? 'bg-[#D4AF37] text-white shadow-lg'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]'
                                     }`}
                             >
                                 {filter.name}

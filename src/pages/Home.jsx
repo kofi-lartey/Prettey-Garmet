@@ -1,22 +1,48 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { FiArrowRight, FiStar } from 'react-icons/fi';
 import { stats, testimonials } from '../data/testimonials';
+import { serviceCategories } from '../data/services';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 const Home = () => {
+    const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+    const videoRef = useRef(null);
+
+    const videos = [
+        'https://res.cloudinary.com/djjgkezui/video/upload/v1772193702/NIGERIAN_TRADITIONAL_BRIDAL_LOOK_YORUBA_BRIDE_EDITION_nigerianmakeupartist_makeuptutorial_480p_czg7nf.mp4',
+        'https://res.cloudinary.com/djjgkezui/video/upload/v1772290578/New_pixie_glueless_wig_install_wigs_720p_eqxkvw.mp4',
+        'https://res.cloudinary.com/djjgkezui/video/upload/v1772290581/the_texture_on_these_nails_is_SO_cool_diy_gel_nail_tutorial_nails_tutorial_nailart_diy_1080p_dnamiu.mp4',
+        'https://res.cloudinary.com/djjgkezui/video/upload/v1772290584/brown_lip_liner_clear_lip_gloss_combo_fentybeauty_shortsfeed_shortvideo_shorts_shortviral_1080p_a8hmwb.mp4'
+    ];
+
+    const posterImages = [
+        'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1920&q=80',
+        'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1920&q=80',
+        'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920&q=80',
+        'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=1920&q=80'
+    ];
+
     const sliderImages = [
         'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1920&q=80',
-        'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=1920&q=80',
-        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1920&q=80',
-        'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1920&q=80'
+        'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1920&q=80',
+        'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=1920&q=80',
+        'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1920&q=80'
     ];
+
+    // Cycle through videos every 8 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+        }, 8000);
+        return () => clearInterval(interval);
+    }, [videos.length]);
 
     const statsRef = useRef(null);
     const statsInView = useInView(statsRef, { once: true, margin: "-100px" });
@@ -25,16 +51,21 @@ const Home = () => {
         <div className="overflow-hidden">
             {/* Hero Section */}
             <section className="relative h-screen">
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
-                    poster="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1920&q=80"
-                >
-                    <source src="https://res.cloudinary.com/djjgkezui/video/upload/v1772193702/NIGERIAN_TRADITIONAL_BRIDAL_LOOK_YORUBA_BRIDE_EDITION_nigerianmakeupartist_makeuptutorial_480p_czg7nf.mp4" />
-                </video>
+                {/* Video Background */}
+                {videos.map((video, index) => (
+                    <video
+                        key={index}
+                        ref={videoRef}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentVideoIndex ? 'opacity-100' : 'opacity-0'}`}
+                        poster={posterImages[index] || posterImages[0]}
+                    >
+                        <source src={video} type="video/mp4" />
+                    </video>
+                ))}
 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
@@ -51,7 +82,7 @@ const Home = () => {
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
                         <span className="inline-block text-[#F5E6C8] text-sm tracking-[0.3em] uppercase mb-4">
-                            Professional Makeup Artist
+                            Beauty & Wellness Studio
                         </span>
                     </motion.div>
 
@@ -61,7 +92,7 @@ const Home = () => {
                         transition={{ duration: 0.8, delay: 0.4 }}
                         className="font-playfair text-5xl md:text-7xl lg:text-8xl text-white mb-6"
                     >
-                        Luxe <span className="italic text-[#D4AF37]">Beauty</span>
+                        Girlies <span className="italic text-[#D4AF37]">Luxe</span>
                     </motion.h1>
 
                     <motion.p
@@ -70,7 +101,7 @@ const Home = () => {
                         transition={{ duration: 0.8, delay: 0.6 }}
                         className="text-white/90 text-lg md:text-xl max-w-xl mb-10"
                     >
-                        Enhancing your natural beauty with luxury makeup services tailored to make you look and feel extraordinary.
+                        Your one-stop beauty destination for makeup, nails, lip gloss, and hair services. Look stunning, feel confident.
                     </motion.p>
 
                     <motion.div
@@ -103,6 +134,21 @@ const Home = () => {
                         <div className="w-1 h-2 bg-white/70 rounded-full" />
                     </motion.div>
                 </motion.div>
+
+                {/* Video Indicators */}
+                <div className="absolute bottom-8 right-8 z-10 flex gap-2">
+                    {videos.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentVideoIndex(index)}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentVideoIndex
+                                ? 'bg-[#D4AF37] w-8'
+                                : 'bg-white/50 hover:bg-white/80'
+                                }`}
+                            aria-label={`Switch to video ${index + 1}`}
+                        />
+                    ))}
+                </div>
             </section>
 
             {/* Image Slider Section */}
@@ -116,7 +162,7 @@ const Home = () => {
                     >
                         <h2 className="section-title">Our Signature Looks</h2>
                         <p className="section-subtitle">
-                            Explore our collection of stunning makeup styles crafted for every occasion
+                            Explore our collection of stunning styles across all our beauty services
                         </p>
                     </motion.div>
 
@@ -156,6 +202,81 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Services Categories */}
+            <section className="py-20 bg-gradient-to-r from-[#FFF5F8] via-[#FFF9F5] to-[#F5F5FF]">
+                <div className="container-custom">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-12"
+                    >
+                        <span className="text-[#D4AF37] text-sm tracking-[0.3em] uppercase mb-4 block">
+                            What We Offer
+                        </span>
+                        <h2 className="section-title">Our Beauty Services</h2>
+                        <p className="section-subtitle">
+                            From head to toe, we've got you covered with our comprehensive beauty services
+                        </p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        {serviceCategories.filter(cat => cat.id !== 'all').map((category, index) => (
+                            <motion.div
+                                key={category.id}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
+                            >
+                                <Link to="/services">
+                                    <motion.div
+                                        whileHover={{ y: -10, scale: 1.02 }}
+                                        className="bg-white rounded-2xl p-6 shadow-lg text-center h-full"
+                                    >
+                                        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-[#B76E79]/20 flex items-center justify-center">
+                                            {category.id === 'makeup' && (
+                                                <span className="text-2xl">💄</span>
+                                            )}
+                                            {category.id === 'lipgloss' && (
+                                                <span className="text-2xl">💋</span>
+                                            )}
+                                            {category.id === 'nails' && (
+                                                <span className="text-2xl">💅</span>
+                                            )}
+                                            {category.id === 'hair' && (
+                                                <span className="text-2xl">👩‍🦱</span>
+                                            )}
+                                        </div>
+                                        <h3 className="font-playfair text-xl text-gray-900 mb-2">
+                                            {category.name}
+                                        </h3>
+                                        <p className="text-gray-500 text-sm">
+                                            Explore services
+                                        </p>
+                                    </motion.div>
+                                </Link>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mt-12"
+                    >
+                        <Link
+                            to="/services"
+                            className="inline-flex items-center gap-2 text-[#D4AF37] font-medium hover:gap-4 transition-all"
+                        >
+                            View All Services
+                            <FiArrowRight />
+                        </Link>
+                    </motion.div>
+                </div>
+            </section>
+
             {/* Stats Section */}
             <section ref={statsRef} className="py-20 bg-gradient-to-r from-[#F8E1E7] via-[#FFF9F5] to-[#F7E7CE]">
                 <div className="container-custom">
@@ -170,7 +291,7 @@ const Home = () => {
                             >
                                 <div className="font-playfair text-4xl md:text-5xl font-bold text-[#D4AF37] mb-2">
                                     {statsInView ? (
-                                        <CountUp value={stat.value} suffix={stat.suffix} />
+                                        <CountUp value={stat.value} suffix={stat.suffix} enableScrollSpy={statsInView} />
                                     ) : (
                                         <>0{stat.suffix}</>
                                     )}
@@ -248,7 +369,7 @@ const Home = () => {
                             Ready to Feel <span className="text-[#D4AF37] italic">Beautiful</span>?
                         </h2>
                         <p className="text-white/80 text-lg max-w-2xl mx-auto mb-10">
-                            Book your appointment today and let us create a look that makes you feel confident, beautiful, and ready to shine.
+                            Book your appointment today and let us create a look that makes you feel confident, beautiful, and ready to shine. All beauty services in one place!
                         </p>
                         <Link
                             to="/booking"
@@ -265,14 +386,40 @@ const Home = () => {
 };
 
 // Counter animation component
-const CountUp = ({ value, suffix }) => {
+const CountUp = ({ value, suffix, enableScrollSpy }) => {
+    const [count, setCount] = useState(0);
+    const [hasStarted, setHasStarted] = useState(false);
+
+    useEffect(() => {
+        if (!enableScrollSpy) return;
+
+        setHasStarted(true);
+        let start = 0;
+        const duration = 2000;
+        const increment = value / (duration / 16);
+
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= value) {
+                setCount(value);
+                clearInterval(timer);
+            } else {
+                setCount(Math.floor(start));
+            }
+        }, 16);
+
+        return () => clearInterval(timer);
+    }, [value, enableScrollSpy]);
+
+    const displayValue = hasStarted ? count : 0;
+
     return (
         <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
         >
-            {value >= 1000 ? `${(value / 1000).toFixed(0)}K` : value}{suffix}
+            {displayValue >= 1000 ? `${(displayValue / 1000).toFixed(0)}K` : displayValue}{suffix}
         </motion.span>
     );
 };

@@ -28,9 +28,18 @@ const Services = () => {
                             Luxury <span className="italic text-[#D4AF37]">Beauty</span> Services
                         </h1>
                         <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-                            Discover our range of professional makeup services designed to enhance your natural beauty for any occasion.
+                            Discover our full range of professional beauty services - from stunning makeup to luxurious nail care, custom lip gloss, and expert wig services.
                         </p>
                     </motion.div>
+                </div>
+            </section>
+
+            {/* NB Note */}
+            <section className="py-4 bg-amber-50">
+                <div className="container-custom">
+                    <p className="text-center text-amber-800 text-sm font-medium">
+                        <span className="font-bold">NB:</span> Prices may differ based on your location. Contact us for a quote.
+                    </p>
                 </div>
             </section>
 
@@ -45,8 +54,8 @@ const Services = () => {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${activeCategory === category.id
-                                        ? 'bg-[#D4AF37] text-white shadow-lg'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]'
+                                    ? 'bg-[#D4AF37] text-white shadow-lg'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]'
                                     }`}
                             >
                                 {category.name}
@@ -93,7 +102,7 @@ const Services = () => {
                                                 {service.name}
                                             </h3>
                                             <span className="text-[#D4AF37] font-semibold text-xl">
-                                                ${service.price}
+                                                GH₵{service.price}
                                             </span>
                                         </div>
 
@@ -145,7 +154,7 @@ const Services = () => {
                         viewport={{ once: true }}
                         className="text-center mb-16"
                     >
-                        <h2 className="section-title">Why Choose Luxe Beauty?</h2>
+                        <h2 className="section-title">Why Choose Girlies Luxe?</h2>
                         <p className="section-subtitle">
                             We believe in delivering an exceptional experience every time
                         </p>
@@ -159,8 +168,8 @@ const Services = () => {
                                 icon: '✨'
                             },
                             {
-                                title: 'Personalized Service',
-                                description: 'Every face is unique. We customize each look to enhance your individual features and style.',
+                                title: 'All-in-One Beauty',
+                                description: 'From makeup to nails, lip gloss to wigs - get all your beauty needs in one place.',
                                 icon: '💕'
                             },
                             {

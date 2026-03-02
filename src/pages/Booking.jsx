@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiCalendar, FiClock, FiCheck, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiCalendar, FiClock, FiCheck, FiChevronLeft, FiChevronRight, FiAlertCircle } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 import { services } from '../data/services';
 
 const Booking = () => {
@@ -11,6 +12,8 @@ const Booking = () => {
     const [selectedTime, setSelectedTime] = useState(null);
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [isSending, setIsSending] = useState(false);
+    const [sendError, setSendError] = useState(null);
     const [step, setStep] = useState(1);
 
     const [formData, setFormData] = useState({
@@ -54,16 +57,20 @@ const Booking = () => {
 
         // Current month days
         const today = new Date();
+        today.setHours(0, 0, 0, 0); // Normalize today to midnight
+
         for (let i = 1; i <= daysInMonth; i++) {
-            const date = new Date(year, month, i);
-            const isPast = date < today && date.toDateString() !== today.toDateString();
-            const isSunday = date.getDay() === 0;
+            // Create date at midnight for consistent comparison
+            const date = new Date(year, month, i, 0, 0, 0, 0);
+
+            // Date is past if it's before today
+            const isPast = date.getTime() < today.getTime();
+
             days.push({
                 day: i,
                 isCurrentMonth: true,
                 isPast,
-                isSunday,
-                date
+                date: date
             });
         }
 
@@ -77,14 +84,106 @@ const Booking = () => {
     };
 
     const handleDateSelect = (day) => {
-        if (day.isCurrentMonth && !day.isPast && !day.isSunday) {
+        if (day.isCurrentMonth && !day.isPast) {
             setSelectedDate(day.date);
             setSelectedTime(null);
         }
     };
 
-    const handleBooking = () => {
-        setShowConfirmation(true);
+    const handleBooking = async () => {
+        setIsSending(true);
+        setSendError(null);
+
+        // Format date for Google Calendar (Example: 20260315T140000Z)
+        const rawDate = selectedDate ? selectedDate.toISOString().split('T')[0] : '';
+        const timeParts = selectedTime ? selectedTime.match(/(\d+):(\d+)\s*(AM|PM)/i) : null;
+
+        let formattedTime = '';
+        if (timeParts) {
+            let hours = parseInt(timeParts[1]);
+            const minutes = timeParts[2];
+            const ampm = timeParts[3].toUpperCase();
+            if (ampm === 'PM' && hours !== 12) hours += 12;
+            if (ampm === 'AM' && hours === 12) hours = 0;
+            formattedTime = `${hours.toString().padStart(2, '0')}${minutes}`;
+        }
+
+        const formattedDate = rawDate.replace(/-/g, '');
+
+        // Create Start and End time (adds 1 hour for the calendar block)
+        const cal_start = `${formattedDate}T${formattedTime}00`;
+        const cal_end_time = (parseInt(formattedTime) + 100).toString().padStart(4, '0');
+        const cal_end = `${formattedDate}T${cal_end_time}00`;
+
+        // Google Maps location
+        const studio_location = 'Nungua Kantamato, Accra, Ghana';
+        const studio_lat = '5.6068032';
+        const studio_lng = '-0.1021721';
+        const google_maps_link = `https://www.google.com/maps?q=${studio_lat},${studio_lng}`;
+
+        // Prepare template parameters for EmailJS
+        const templateParams = {
+            client_name: formData.name,
+            client_email: formData.email,
+            client_phone: formData.phone.replace(/\D/g, ''),
+            service_name: selectedService?.name || 'Not selected',
+            service_duration: selectedService?.duration || 'N/A',
+            service_price: `GH₵${totalPrice}`,
+            appointment_date: selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not selected',
+            appointment_time: selectedTime || 'Not selected',
+            notes: formData.notes || 'No extra notes',
+            cal_start: cal_start,
+            cal_end: cal_end,
+            current_year: new Date().getFullYear(),
+            studio_location: studio_location,
+            studio_lat: studio_lat,
+            studio_lng: studio_lng,
+            google_maps_link: google_maps_link
+        };
+
+        try {
+            // Replace these with your actual EmailJS credentials
+            // Get your credentials from https://www.emailjs.com/
+            await emailjs.send(
+                'service_1enpmxd',     // Replace with your EmailJS service ID
+                'template_6fk9ssv',   // Replace with your EmailJS template ID
+                templateParams,
+                'T3IYBhRySeZMyFwd7'     // Replace with your EmailJS public key
+            );
+
+            // Show confirmation
+            setShowConfirmation(true);
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+
+            // If EmailJS fails, fall back to mailto
+            const subject = `New Booking: ${formData.name} - ${selectedService?.name || 'Service'}`;
+            const body =
+                `BOOKING REQUEST - Girlies Luxe
+
+CLIENT DETAILS
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+
+SERVICE
+Service: ${selectedService?.name || 'Not selected'}
+Duration: ${selectedService?.duration || 'N/A'}
+Price: GH₵${totalPrice}
+
+APPOINTMENT
+Date: ${selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not selected'}
+Time: ${selectedTime || 'Not selected'}
+
+NOTES
+${formData.notes || 'None'}`;
+
+            // Open email client as fallback
+            window.location.href = `mailto:kofilartey12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            setShowConfirmation(true);
+        } finally {
+            setIsSending(false);
+        }
     };
 
     const totalPrice = selectedService?.price || 0;
@@ -179,7 +278,7 @@ const Booking = () => {
                                                         <div className="flex-1">
                                                             <h3 className="font-playfair text-xl mb-1">{service.name}</h3>
                                                             <p className="text-gray-500 text-sm mb-2">{service.duration}</p>
-                                                            <p className="text-[#D4AF37] font-semibold">${service.price}</p>
+                                                            <p className="text-[#D4AF37] font-semibold">GH₵{service.price}</p>
                                                         </div>
                                                     </div>
                                                 </motion.div>
@@ -239,10 +338,10 @@ const Booking = () => {
                                                     <button
                                                         key={i}
                                                         onClick={() => handleDateSelect(day)}
-                                                        disabled={!day.isCurrentMonth || day.isPast || day.isSunday}
+                                                        disabled={!day.isCurrentMonth || day.isPast}
                                                         className={`p-3 rounded-xl text-center transition-all ${!day.isCurrentMonth
                                                             ? 'text-gray-300'
-                                                            : day.isPast || day.isSunday
+                                                            : day.isPast
                                                                 ? 'text-gray-300 cursor-not-allowed'
                                                                 : selectedDate?.toDateString() === day.date?.toDateString()
                                                                     ? 'bg-[#D4AF37] text-white'
@@ -371,9 +470,10 @@ const Booking = () => {
                                                 </button>
                                                 <button
                                                     onClick={handleBooking}
-                                                    className="flex-1 py-3 rounded-full gold-gradient text-white font-medium hover:shadow-lg transition-shadow"
+                                                    disabled={isSending}
+                                                    className="flex-1 py-3 rounded-full gold-gradient text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-shadow"
                                                 >
-                                                    Confirm Booking
+                                                    {isSending ? 'Sending...' : 'Confirm Booking'}
                                                 </button>
                                             </div>
                                         </div>
@@ -431,7 +531,7 @@ const Booking = () => {
                                 <div className="border-t pt-4">
                                     <div className="flex justify-between items-center text-lg font-semibold">
                                         <span>Total</span>
-                                        <span className="text-[#D4AF37]">${totalPrice}</span>
+                                        <span className="text-[#D4AF37]">GH₵{totalPrice}</span>
                                     </div>
                                 </div>
                             </motion.div>
@@ -461,9 +561,18 @@ const Booking = () => {
                                 <FiCheck className="text-white text-4xl" />
                             </div>
                             <h3 className="font-playfair text-2xl mb-4">Booking Confirmed!</h3>
-                            <p className="text-gray-500 mb-6">
+                            <p className="text-gray-500 mb-2">
                                 Thank you for your booking! We've sent a confirmation email to {formData.email}.
                             </p>
+                            <p className="text-gray-500 mb-6">
+                                Girlies Luxe - Studio Address: <a href="https://www.google.com/maps?q=5.6068032,-0.1021721" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:underline">Nungua Kantmato, Accra, Ghana</a>
+                            </p>
+                            {sendError && (
+                                <div className="flex items-center justify-center gap-2 text-red-500 mb-4">
+                                    <FiAlertCircle />
+                                    <span className="text-sm">{sendError}</span>
+                                </div>
+                            )}
                             <button
                                 onClick={() => {
                                     setShowConfirmation(false);

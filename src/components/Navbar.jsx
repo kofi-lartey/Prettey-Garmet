@@ -25,6 +25,7 @@ const Navbar = () => {
         { name: 'Home', path: '/' },
         { name: 'Services', path: '/services' },
         { name: 'Portfolio', path: '/portfolio' },
+        { name: 'Blog', path: '/blog' },
         { name: 'Contact', path: '/contact' },
         { name: 'Book Now', path: '/booking', isButton: true }
     ];
@@ -36,8 +37,8 @@ const Navbar = () => {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                        ? 'bg-white/90 backdrop-blur-md shadow-lg py-4'
-                        : 'bg-transparent py-6'
+                    ? 'bg-white/90 backdrop-blur-md shadow-lg py-4'
+                    : 'bg-transparent py-6'
                     }`}
             >
                 <div className="container-custom">
@@ -46,11 +47,11 @@ const Navbar = () => {
                         <Link to="/" className="flex items-center gap-2">
                             <span className={`font-playfair text-2xl md:text-3xl font-semibold ${isScrolled ? 'text-[#333]' : 'text-white'
                                 }`}>
-                                Luxe
+                                Girlies
                             </span>
                             <span className={`font-playfair text-2xl md:text-3xl font-light italic ${isScrolled ? 'text-[#D4AF37]' : 'text-[#F5E6C8]'
                                 }`}>
-                                Beauty
+                                Luxe
                             </span>
                         </Link>
 
@@ -61,8 +62,8 @@ const Navbar = () => {
                                     key={link.name}
                                     to={link.path}
                                     className={`font-medium transition-colors duration-300 ${link.isButton
-                                            ? 'px-6 py-2.5 rounded-full gold-gradient text-white hover:shadow-lg hover:scale-105 transition-all duration-300'
-                                            : `${isScrolled ? 'text-gray-700 hover:text-[#D4AF37]' : 'text-white/90 hover:text-white'}`
+                                        ? 'px-6 py-2.5 rounded-full gold-gradient text-white hover:shadow-lg hover:scale-105 transition-all duration-300'
+                                        : `${isScrolled ? 'text-gray-700 hover:text-[#D4AF37]' : 'text-white/90 hover:text-white'}`
                                         }`}
                                 >
                                     {link.name}
@@ -103,8 +104,8 @@ const Navbar = () => {
                                         to={link.path}
                                         onClick={() => setIsMobileMenuOpen(false)}
                                         className={`font-playfair text-3xl transition-colors duration-300 ${link.isButton
-                                                ? 'px-8 py-3 rounded-full gold-gradient text-white'
-                                                : 'text-gray-700 hover:text-[#D4AF37]'
+                                            ? 'px-8 py-3 rounded-full gold-gradient text-white'
+                                            : 'text-gray-700 hover:text-[#D4AF37]'
                                             }`}
                                     >
                                         {link.name}

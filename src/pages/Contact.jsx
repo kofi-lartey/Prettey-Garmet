@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiPhone, FiMapPin, FiClock, FiInstagram, FiFacebook, FiTwitter, FiSend } from 'react-icons/fi';
+import { FiMail, FiPhone, FiMapPin, FiClock, FiInstagram, FiTwitter, FiSend, FiAlertCircle, FiCheck } from 'react-icons/fi';
+import { SiTiktok } from 'react-icons/si';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -11,10 +13,70 @@ const Contact = () => {
         message: ''
     });
 
-    const handleSubmit = (e) => {
+    const [isSending, setIsSending] = useState(false);
+    const [sendSuccess, setSendSuccess] = useState(false);
+    const [sendError, setSendError] = useState(null);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission
-        console.log('Form submitted:', formData);
+        setIsSending(true);
+        setSendError(null);
+        setSendSuccess(false);
+
+        const templateParams = {
+            client_name: formData.name,
+            client_email: formData.email,
+            client_phone: formData.phone,
+            event_date: formData.eventDate,
+            message: formData.message
+        };
+
+        try {
+            // Replace these with your actual EmailJS credentials
+            // Get your credentials from https://www.emailjs.com/
+            await emailjs.send(
+                'service_1enpmxd',     // Replace with your EmailJS service ID
+                'template_lolkgoh',   // Replace with your EmailJS template ID
+                templateParams,
+                'T3IYBhRySeZMyFwd7'     // Replace with your EmailJS public key
+            );
+
+            setSendSuccess(true);
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                eventDate: '',
+                message: ''
+            });
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+
+            // If EmailJS fails, fall back to mailto
+            const subject = `New Message: ${formData.name}`;
+            const body =
+                `NEW MESSAGE FROM WEBSITE
+
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Event Date: ${formData.eventDate || 'Not specified'}
+
+Message:
+${formData.message}`;
+
+            window.location.href = `mailto:kofilartey12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            setSendSuccess(true);
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                eventDate: '',
+                message: ''
+            });
+        } finally {
+            setIsSending(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -25,33 +87,27 @@ const Contact = () => {
         {
             icon: FiMapPin,
             title: 'Studio Address',
-            details: ['123 Beauty Lane', 'New York, NY 10001'],
+            details: ['Nungua Kantmato', 'Accra, Ghana'],
+            link: 'https://www.google.com/maps?q=5.6068032,-0.1021721',
             color: 'bg-[#F8E1E7]'
         },
         {
             icon: FiPhone,
             title: 'Phone',
-            details: ['+1 (555) 123-4567', '+1 (555) 987-6543'],
+            details: ['0547510771'],
             color: 'bg-[#F7E7CE]'
-        },
-        {
-            icon: FiMail,
-            title: 'Email',
-            details: ['hello@luxebeauty.com', 'book@luxebeauty.com'],
-            color: 'bg-[#E8DED5]'
         },
         {
             icon: FiClock,
             title: 'Studio Hours',
             details: ['Mon - Sat: 9AM - 7PM', 'Sunday: By Appointment'],
-            color: 'bg-[#F8E1E7]'
+            color: 'bg-[#E8DED5]'
         }
     ];
 
     const socials = [
-        { icon: FiInstagram, label: 'Instagram', href: '#' },
-        { icon: FiFacebook, label: 'Facebook', href: '#' },
-        { icon: FiTwitter, label: 'Twitter', href: '#' }
+        { icon: FiInstagram, label: 'Instagram', href: 'https://instagram.com/girliesluxe' },
+        { icon: SiTiktok, label: 'TikTok', href: 'https://tiktok.com/@girliesluxe' }
     ];
 
     return (
@@ -155,13 +211,39 @@ const Contact = () => {
 
                                 <motion.button
                                     type="submit"
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full py-4 rounded-full gold-gradient text-white font-medium flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
+                                    disabled={isSending}
+                                    whileHover={{ scale: isSending ? 1 : 1.02 }}
+                                    whileTap={{ scale: isSending ? 1 : 0.98 }}
+                                    className="w-full py-4 rounded-full gold-gradient text-white font-medium flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-shadow disabled:opacity-50"
                                 >
-                                    <FiSend />
-                                    Send Message
+                                    {isSending ? (
+                                        <span>Sending...</span>
+                                    ) : sendSuccess ? (
+                                        <><FiCheck /> Message Sent!</>
+                                    ) : (
+                                        <><FiSend /> Send Message</>
+                                    )}
                                 </motion.button>
+
+                                {sendSuccess && (
+                                    <motion.p
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="text-green-600 text-center mt-4"
+                                    >
+                                        Thank you! Your message has been sent successfully.
+                                    </motion.p>
+                                )}
+
+                                {sendError && (
+                                    <motion.p
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="text-red-500 text-center mt-4 flex items-center justify-center gap-2"
+                                    >
+                                        <FiAlertCircle /> {sendError}
+                                    </motion.p>
+                                )}
                             </form>
                         </motion.div>
 
@@ -184,6 +266,16 @@ const Contact = () => {
                                         {info.details.map((detail, i) => (
                                             <p key={i} className="text-gray-500 text-sm">{detail}</p>
                                         ))}
+                                        {info.link && (
+                                            <a
+                                                href={info.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-[#D4AF37] text-sm hover:underline mt-2 inline-block"
+                                            >
+                                                View on Google Maps
+                                            </a>
+                                        )}
                                     </motion.div>
                                 ))}
                             </div>
@@ -216,7 +308,7 @@ const Contact = () => {
 
                             {/* WhatsApp Button */}
                             <motion.a
-                                href="https://wa.me/15551234567"
+                                href="https://wa.me/233547510771"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 initial={{ opacity: 0, y: 20 }}
@@ -240,12 +332,13 @@ const Contact = () => {
             {/* Map Section */}
             <section className="h-[400px] bg-gray-100">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.5178032!2d-0.1021721!3d5.6068032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMzYnMjEuMiTCMDawnC4wLjE!5e0!3m2!1sen!2sgh!4v1234567890!5m2!1sen!2sgh"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen=""
                     loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
                     className="grayscale hover:grayscale-0 transition-all duration-500"
                     title="Studio Location"
                 />

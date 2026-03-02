@@ -1,43 +1,30 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiInstagram, FiFacebook, FiTwitter, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
+import { FiInstagram, FiMail, FiPhone, FiMapPin, FiClock } from 'react-icons/fi';
+import { SiTiktok } from 'react-icons/si';
 
 const Footer = () => {
-    const instagramImages = [
-        'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=300&q=80',
-        'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=300&q=80',
-        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=300&q=80',
-        'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300&q=80'
-    ];
-
-    const socialLinks = [
-        { icon: FiInstagram, href: '#', label: 'Instagram' },
-        { icon: FiFacebook, href: '#', label: 'Facebook' },
-        { icon: FiTwitter, href: '#', label: 'Twitter' }
-    ];
+    const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-gray-900 text-white pt-20 pb-8">
-            {/* Floating gradient background */}
-            <div className="fixed inset-0 pointer-events-none overflow-hidden">
-                <div className="floating-gradient w-96 h-96 bg-[#D4AF37]/10 -bottom-20 -left-20" />
-                <div className="floating-gradient w-80 h-80 bg-[#B76E79]/10 top-40 right-20" />
-            </div>
-
-            <div className="container-custom relative z-10">
-                {/* Main Footer Content */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                    {/* Brand Section */}
-                    <div>
+        <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+            {/* Main Footer */}
+            <div className="container-custom py-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                    {/* Brand & Social */}
+                    <div className="lg:col-span-1">
                         <Link to="/" className="inline-block mb-6">
-                            <span className="font-playfair text-3xl font-semibold">Luxe</span>
-                            <span className="font-playfair text-3xl font-light italic text-[#D4AF37]">Beauty</span>
+                            <span className="font-playfair text-3xl font-semibold">Girlies</span>
+                            <span className="font-playfair text-3xl font-light italic text-[#D4AF37]">Luxe</span>
                         </Link>
                         <p className="text-gray-400 mb-6 leading-relaxed">
-                            Creating beautiful memories one face at a time. Professional makeup services tailored to enhance your natural beauty.
+                            Your one-stop beauty destination for makeup, wigs, nails, and lip gloss services.
                         </p>
-                        <div className="flex gap-4">
-                            {socialLinks.map((social) => (
+                        <div className="flex gap-3">
+                            {[
+                                { icon: FiInstagram, href: 'https://instagram.com/prettygarnet', label: 'Instagram' },
+                                { icon: SiTiktok, href: 'https://tiktok.com/@prettygarnet', label: 'TikTok' }
+                            ].map((social) => (
                                 <motion.a
                                     key={social.label}
                                     href={social.href}
@@ -53,15 +40,26 @@ const Footer = () => {
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="font-playfair text-xl mb-6">Quick Links</h4>
+                        <h4 className="font-playfair text-lg mb-6 relative inline-block">
+                            Quick Links
+                            <span className="absolute -bottom-2 left-0 w-8 h-0.5 bg-[#D4AF37]"></span>
+                        </h4>
                         <ul className="space-y-3">
-                            {['Home', 'Services', 'Portfolio', 'Contact', 'Book Now'].map((link) => (
-                                <li key={link}>
+                            {[
+                                { name: 'Home', path: '/' },
+                                { name: 'Services', path: '/services' },
+                                { name: 'Portfolio', path: '/portfolio' },
+                                { name: 'Contact', path: '/contact' },
+                                { name: 'Blog', path: '/blog' },
+                                { name: 'Book Now', path: '/booking' }
+                            ].map((link) => (
+                                <li key={link.name}>
                                     <Link
-                                        to={link === 'Home' ? '/' : `/${link.toLowerCase().replace(' ', '-')}`}
-                                        className="text-gray-400 hover:text-[#D4AF37] transition-colors duration-300"
+                                        to={link.path}
+                                        className="text-gray-400 hover:text-[#D4AF37] transition-colors duration-300 flex items-center gap-2"
                                     >
-                                        {link}
+                                        <span className="w-1 h-1 rounded-full bg-[#D4AF37] opacity-0 group-hover:opacity-100"></span>
+                                        {link.name}
                                     </Link>
                                 </li>
                             ))}
@@ -70,9 +68,18 @@ const Footer = () => {
 
                     {/* Services */}
                     <div>
-                        <h4 className="font-playfair text-xl mb-6">Services</h4>
+                        <h4 className="font-playfair text-lg mb-6 relative inline-block">
+                            Our Services
+                            <span className="absolute -bottom-2 left-0 w-8 h-0.5 bg-[#D4AF37]"></span>
+                        </h4>
                         <ul className="space-y-3">
-                            {['Bridal Makeup', 'Engagement Makeup', 'Birthday Glam', 'Photoshoot Makeup', 'Everyday Soft Glam'].map((service) => (
+                            {[
+                                'Bridal Makeup',
+                                'Wig Services',
+                                'Nail Services',
+                                'Lip Gloss',
+                                'Event Glam'
+                            ].map((service) => (
                                 <li key={service}>
                                     <span className="text-gray-400">{service}</span>
                                 </li>
@@ -80,58 +87,47 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Contact Info */}
+                    {/* Contact */}
                     <div>
-                        <h4 className="font-playfair text-xl mb-6">Contact</h4>
+                        <h4 className="font-playfair text-lg mb-6 relative inline-block">
+                            Get in Touch
+                            <span className="absolute -bottom-2 left-0 w-8 h-0.5 bg-[#D4AF37]"></span>
+                        </h4>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-gray-400">
                                 <FiMapPin className="text-[#D4AF37] mt-1 flex-shrink-0" />
-                                <span>123 Beauty Lane<br />New York, NY 10001</span>
+                                <a
+                                    href="https://www.google.com/maps?q=5.6068032,-0.1021721"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-[#D4AF37] transition-colors"
+                                >
+                                    Nungua Kantmato, Accra
+                                </a>
                             </li>
                             <li className="flex items-center gap-3 text-gray-400">
                                 <FiPhone className="text-[#D4AF37] flex-shrink-0" />
-                                <span>+1 (555) 123-4567</span>
+                                <span>0547510771</span>
                             </li>
                             <li className="flex items-center gap-3 text-gray-400">
-                                <FiMail className="text-[#D4AF37] flex-shrink-0" />
-                                <span>hello@luxebeauty.com</span>
+                                <FiClock className="text-[#D4AF37] flex-shrink-0" />
+                                <span>Mon - Sat: 9AM - 6PM</span>
                             </li>
                         </ul>
                     </div>
                 </div>
+            </div>
 
-                {/* Instagram Preview */}
-                <div className="mb-16">
-                    <h4 className="font-playfair text-xl mb-6 text-center">Follow Us @LuxeBeauty</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {instagramImages.map((img, index) => (
-                            <motion.div
-                                key={index}
-                                whileHover={{ scale: 1.05 }}
-                                className="relative aspect-square overflow-hidden rounded-lg group cursor-pointer"
-                            >
-                                <img
-                                    src={img}
-                                    alt={`Instagram ${index + 1}`}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <FiInstagram className="text-white text-2xl" />
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Bottom Bar */}
-                <div className="border-t border-white/10 pt-8">
+            {/* Bottom Bar */}
+            <div className="border-t border-white/10">
+                <div className="container-custom py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <p className="text-gray-500 text-sm">
-                            © 2026 Luxe Beauty Studio. All rights reserved.
+                            © {currentYear} Girlies Luxe. All rights reserved.
                         </p>
-                        <div className="flex gap-6 text-sm text-gray-500">
-                            <a href="#" className="hover:text-[#D4AF37] transition-colors">Privacy Policy</a>
-                            <a href="#" className="hover:text-[#D4AF37] transition-colors">Terms of Service</a>
+                        <div className="flex gap-6 text-sm">
+                            <a href="/privacy" className="text-gray-500 hover:text-[#D4AF37] transition-colors">Privacy</a>
+                            <a href="/terms" className="text-gray-500 hover:text-[#D4AF37] transition-colors">Terms</a>
                         </div>
                     </div>
                 </div>
