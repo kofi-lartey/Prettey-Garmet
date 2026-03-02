@@ -227,18 +227,24 @@ const BlogAdmin = () => {
     return (
         <div className="pt-24 pb-20 min-h-screen bg-gray-50">
             {/* Header */}
-            <section className="py-12 bg-white shadow-sm">
+            <section className="py-8 md:py-12 bg-white shadow-sm">
                 <div className="container-custom">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
                             <Link to="/blog" className="text-[#D4AF37] hover:underline flex items-center gap-2 mb-2">
                                 <FiArrowLeft /> Back to Blog
                             </Link>
-                            <h1 className="font-playfair text-3xl md:text-4xl text-gray-900">
+                            <h1 className="font-playfair text-2xl md:text-4xl text-gray-900">
                                 Blog <span className="italic text-[#D4AF37]">Admin</span>
                             </h1>
-                            <p className="text-gray-500 mt-2">Create, edit, and manage your blog posts</p>
+                            <p className="text-gray-500 mt-1 md:mt-2 text-sm md:text-base">Create, edit, and manage your blog posts</p>
                         </div>
+                        <button
+                            onClick={() => { resetForm(); setIsEditing(true); }}
+                            className="flex md:hidden items-center justify-center gap-2 w-full md:w-auto px-6 py-3 rounded-full bg-[#D4AF37] text-white font-medium hover:bg-[#B8962E] transition-colors"
+                        >
+                            <FiPlus /> New Post
+                        </button>
                         <button
                             onClick={() => { resetForm(); setIsEditing(true); }}
                             className="hidden md:flex items-center gap-2 px-6 py-3 rounded-full bg-[#D4AF37] text-white font-medium hover:bg-[#B8962E] transition-colors"
@@ -249,14 +255,14 @@ const BlogAdmin = () => {
                 </div>
             </section>
 
-            <section className="py-12">
-                <div className="container-custom">
+            <section className="py-8 md:py-12">
+                <div className="container-custom px-4 md:px-auto">
                     {/* Form Section */}
                     {isEditing && (
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="bg-white rounded-3xl shadow-lg p-8 mb-12"
+                            className="bg-white rounded-3xl shadow-lg p-6 md:p-8 mb-8 md:mb-12"
                         >
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="font-playfair text-2xl">
@@ -366,8 +372,8 @@ https://youtu.be/ANOTHER_VIDEO"
                                     <label className="block text-gray-600 mb-2 text-sm font-medium">
                                         Images <span className="text-red-500">*</span> (at least one)
                                     </label>
-                                    <div className="flex flex-col md:flex-row gap-4 items-start">
-                                        <div className="flex-1">
+                                    <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
+                                        <div className="flex-1 w-full">
                                             {/* Uploaded Images */}
                                             {formData.images.length > 0 && (
                                                 <div className="grid grid-cols-3 gap-3 mb-4">
@@ -399,7 +405,7 @@ https://youtu.be/ANOTHER_VIDEO"
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="flex-1">
+                                        <div className="w-full md:flex-1">
                                             <label className="block text-gray-600 mb-2 text-sm font-medium">
                                                 Or Enter Image URL
                                             </label>
@@ -493,7 +499,7 @@ https://youtu.be/ANOTHER_VIDEO"
                     )}
 
                     {/* Blog Posts List */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         {blogs.map((blog) => (
                             <motion.article
                                 key={blog.id}

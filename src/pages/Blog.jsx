@@ -9,8 +9,8 @@ const Blog = () => {
     return (
         <div className="pt-24 pb-20 min-h-screen bg-white">
             {/* Header */}
-            <section className="py-20 bg-gradient-to-b from-[#FFF9F5] to-white">
-                <div className="container-custom">
+            <section className="py-12 md:py-20 bg-gradient-to-b from-[#FFF9F5] to-white">
+                <div className="container-custom px-4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -31,9 +31,9 @@ const Blog = () => {
 
             {/* Blog Posts */}
             {blogs.length > 0 ? (
-                <section className="py-16">
-                    <div className="container-custom">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <section className="py-8 md:py-16">
+                    <div className="container-custom px-4 md:px-auto">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                             {blogs.map((post, index) => (
                                 <motion.article
                                     key={post.id}
