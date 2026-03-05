@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { useLoading } from '../context/LoadingContext';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
+    const { startLoading, stopLoading } = useLoading();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,6 +22,18 @@ const Navbar = () => {
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
+
+    useEffect(() => {
+        const handleRouteChange = () => {
+            stopLoading();
+        };
+        handleRouteChange();
+    }, [location, stopLoading]);
+
+    const handleNavClick = (e, path) => {
+        // Always trigger loading for better UX
+        startLoading();
+    };
 
     const navLinks = [
         { name: 'Home', path: '/' },
@@ -37,19 +51,26 @@ const Navbar = () => {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                    ? 'bg-white/90 backdrop-blur-md shadow-lg py-4'
-                    : 'bg-transparent py-6'
+                    ? 'bg-white shadow-lg'
+                    : 'bg-transparent'
                     }`}
             >
-                <div className="container-custom">
+                <div className={`container-custom ${isScrolled ? 'py-4' : 'py-6'}`}>
                     <div className="flex items-center justify-between">
                         {/* Logo */}
                         <Link to="/" className="flex items-center gap-2">
-                            <span className={`font-playfair text-2xl md:text-3xl font-semibold ${isScrolled ? 'text-[#333]' : 'text-white'
+                            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shadow-lg ${isScrolled ? 'ring-2 ring-[#D4AF37]' : 'ring-2 ring-white/50'}`}>
+                                <img
+                                    src="https://res.cloudinary.com/djjgkezui/image/upload/v1772716606/IMG-20260302-WA0015_plfqzv.jpg"
+                                    alt="Girlies Luxe"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <span className={`font-playfair text-xl md:text-2xl font-semibold ${isScrolled ? 'text-[#333]' : 'text-white'
                                 }`}>
                                 Girlies
                             </span>
-                            <span className={`font-playfair text-2xl md:text-3xl font-light italic ${isScrolled ? 'text-[#D4AF37]' : 'text-[#F5E6C8]'
+                            <span className={`font-playfair text-xl md:text-2xl font-light italic ${isScrolled ? 'text-[#D4AF37]' : 'text-[#F5E6C8]'
                                 }`}>
                                 Luxe
                             </span>
@@ -61,6 +82,7 @@ const Navbar = () => {
                                 <Link
                                     key={link.name}
                                     to={link.path}
+                                    onClick={(e) => handleNavClick(e, link.path)}
                                     className={`font-medium transition-colors duration-300 ${link.isButton
                                         ? 'px-6 py-2.5 rounded-full gold-gradient text-white hover:shadow-lg hover:scale-105 transition-all duration-300'
                                         : `${isScrolled ? 'text-gray-700 hover:text-[#D4AF37]' : 'text-white/90 hover:text-white'}`
@@ -102,7 +124,10 @@ const Navbar = () => {
                                 >
                                     <Link
                                         to={link.path}
-                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        onClick={(e) => {
+                                            setIsMobileMenuOpen(false);
+                                            handleNavClick(e, link.path);
+                                        }}
                                         className={`font-playfair text-3xl transition-colors duration-300 ${link.isButton
                                             ? 'px-8 py-3 rounded-full gold-gradient text-white'
                                             : 'text-gray-700 hover:text-[#D4AF37]'

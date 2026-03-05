@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
+import { LoadingProvider } from './context/LoadingContext';
+import PageLoader from './components/PageLoader';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -49,15 +51,18 @@ const AnimatedRoutes = () => {
 const App = () => {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
-        <ScrollToTopOnRouteChange />
-        <Navbar />
-        <main className="flex-1">
-          <AnimatedRoutes />
-        </main>
-        <Footer />
-        <ScrollToTop />
-      </div>
+      <LoadingProvider>
+        <div className="min-h-screen flex flex-col">
+          <ScrollToTopOnRouteChange />
+          <Navbar />
+          <PageLoader />
+          <main className="flex-1">
+            <AnimatedRoutes />
+          </main>
+          <Footer />
+          <ScrollToTop />
+        </div>
+      </LoadingProvider>
     </Router>
   );
 };
