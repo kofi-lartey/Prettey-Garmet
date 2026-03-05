@@ -13,6 +13,7 @@ import 'swiper/css/navigation';
 
 const Home = () => {
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+    const [videoError, setVideoError] = useState(false);
     const videoRef = useRef(null);
 
     const videos = [
@@ -60,12 +61,23 @@ const Home = () => {
                         muted
                         loop
                         playsInline
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentVideoIndex ? 'opacity-100' : 'opacity-0'}`}
+                        onError={() => setVideoError(true)}
+                        onCanPlay={() => setVideoError(false)}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentVideoIndex ? 'opacity-100' : 'opacity-0'} ${videoError ? 'hidden' : ''}`}
                         poster={posterImages[index] || posterImages[0]}
                     >
                         <source src={video} type="video/mp4" />
                     </video>
                 ))}
+
+                {/* Fallback image when video fails */}
+                {videoError && (
+                    <img
+                        src={posterImages[0]}
+                        alt="Hero background"
+                        className="absolute inset-0 w-full h-full object-cover"
+                    />
+                )}
 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
