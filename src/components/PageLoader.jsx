@@ -28,7 +28,7 @@ const PageLoader = () => {
                             ease: 'linear',
                         },
                         y: {
-                            duration: 2,
+                            duration: 2.5,
                             repeat: Infinity,
                             ease: 'easeInOut',
                         },

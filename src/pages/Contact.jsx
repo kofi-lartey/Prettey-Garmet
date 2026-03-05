@@ -65,7 +65,7 @@ Event Date: ${formData.eventDate || 'Not specified'}
 Message:
 ${formData.message}`;
 
-            window.location.href = `mailto:kofilartey12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = `mailto:addobeagloria162@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             setSendSuccess(true);
             setFormData({
                 name: '',

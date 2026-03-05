@@ -179,7 +179,7 @@ NOTES
 ${formData.notes || 'None'}`;
 
             // Open email client as fallback
-            window.location.href = `mailto:kofilartey12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = `mailto:addobeagloria162@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             setShowConfirmation(true);
         } finally {
             setIsSending(false);

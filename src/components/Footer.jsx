@@ -125,6 +125,9 @@ const Footer = () => {
                         <p className="text-gray-500 text-sm">
                             © {currentYear} Girlies Luxe. All rights reserved.
                         </p>
+                        <p className="text-gray-500 text-sm">
+                            Designed by <span className="text-[#D4AF37] font-medium">kofiLartey</span> +233557655008
+                        </p>
                         <div className="flex gap-6 text-sm">
                             <a href="/privacy" className="text-gray-500 hover:text-[#D4AF37] transition-colors">Privacy</a>
                             <a href="/terms" className="text-gray-500 hover:text-[#D4AF37] transition-colors">Terms</a>
