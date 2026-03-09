@@ -200,7 +200,17 @@ const Booking = () => {
                 studio_lat: studio_lat,
                 studio_lng: studio_lng,
                 google_maps_link: google_maps_link,
-                is_order: 'false'
+                is_order: 'false',
+                
+                // Order fields (not applicable for bookings - use placeholders)
+                quantity: '1',
+                total_price: `GH₵${totalPrice}`,
+                shade: 'N/A (Service Booking)',
+                finish: 'N/A',
+                flavor: 'N/A',
+                custom_note: 'N/A',
+                shipping_address: 'N/A (In-Studio Service)',
+                delivery_notes: 'N/A'
             };
         }
 
