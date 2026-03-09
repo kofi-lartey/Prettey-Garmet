@@ -11,6 +11,9 @@ const Services = () => {
         ? services
         : services.filter(service => service.category === activeCategory);
 
+    // Check if a service is a lip gloss product (to show Order instead of Book)
+    const isLipGloss = (service) => service.category === 'lipgloss';
+
     return (
         <div className="pt-24 pb-20">
             {/* Header */}
@@ -131,10 +134,10 @@ const Services = () => {
                                         </div>
 
                                         <Link
-                                            to={`/booking?service=${service.id}`}
+                                            to={isLipGloss(service) ? `/booking?product=${service.id}` : `/booking?service=${service.id}`}
                                             className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-full border-2 border-[#D4AF37] text-[#D4AF37] font-medium transition-all duration-300 hover:bg-[#D4AF37] hover:text-white group-hover:shadow-lg"
                                         >
-                                            Book Now
+                                            {isLipGloss(service) ? 'Order Now' : 'Book Now'}
                                             <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                                         </Link>
                                     </div>
