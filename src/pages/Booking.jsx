@@ -154,6 +154,13 @@ const Booking = () => {
                 shipping_address: `${shippingInfo.address}, ${shippingInfo.city}`,
                 delivery_notes: shippingInfo.deliveryNotes || 'None',
                 
+                // URL-encoded versions for WhatsApp message
+                whatsapp_name: encodeURIComponent(formData.name),
+                whatsapp_service: encodeURIComponent(selectedService?.name || ''),
+                whatsapp_price: encodeURIComponent(`GH₵${selectedService?.price || 0}`),
+                whatsapp_quantity: quantity.toString(),
+                whatsapp_delivery: encodeURIComponent(`${shippingInfo.address}, ${shippingInfo.city}`),
+                
                 notes: formData.notes || 'No extra notes',
                 current_year: new Date().getFullYear(),
                 is_order: 'true'
@@ -210,7 +217,14 @@ const Booking = () => {
                 flavor: 'N/A',
                 custom_note: 'N/A',
                 shipping_address: 'N/A (In-Studio Service)',
-                delivery_notes: 'N/A'
+                delivery_notes: 'N/A',
+                
+                // URL-encoded versions for WhatsApp message
+                whatsapp_name: encodeURIComponent(formData.name),
+                whatsapp_service: encodeURIComponent(selectedService?.name || ''),
+                whatsapp_price: encodeURIComponent(`GH₵${totalPrice}`),
+                whatsapp_quantity: '1',
+                whatsapp_delivery: encodeURIComponent('N/A (In-Studio Service)')
             };
         }
 
