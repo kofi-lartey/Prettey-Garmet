@@ -154,14 +154,14 @@ export const portfolioItems = [
         id: 21,
         title: "Wig Installation",
         category: "hair",
-        image: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=800&q=80",
+        image: "https://i.pinimg.com/1200x/c9/82/e4/c982e48b1b5594d236e76ac134a43cdb.jpg",
         description: "Natural lace front wig"
     },
     {
         id: 22,
         title: "Hair Styling",
         category: "hair",
-        image: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=800&q=80",
+        image: "https://i.pinimg.com/736x/0d/15/cb/0d15cbed78cd3d46ed67c119275fcd65.jpg",
         description: "Professional hair styling"
     }
 ];
