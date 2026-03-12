@@ -5,7 +5,7 @@ export const services = [
         name: "Full Glam Home Service",
         description: "Complete glamorous makeup look for your special event. Perfect for weddings, parties, and big occasions. Includes premium products and lashes.",
         price: 350,
-        image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319003/WhatsApp_Image_2026-03-12_at_12.26.24_PM_1_ee5q23.jpg",
         category: "makeup",
         duration: "1.5 hours",
         includes: ["Full Glam Makeup", "Lashes", "Premium Products"]
@@ -15,7 +15,7 @@ export const services = [
         name: "Soft Glam Home Service",
         description: "Beautiful soft glam look that enhances your natural beauty. Perfect for casual events, dates, and everyday elegance.",
         price: 250,
-        image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319714/WhatsApp_Image_2026-03-12_at_12.28.58_PM_da65ga.jpg",
         category: "makeup",
         duration: "1 hour",
         includes: ["Soft Glam Makeup", "Lashes", "Lip Gloss"]
@@ -25,7 +25,7 @@ export const services = [
         name: "Wake & Make",
         description: "Complete morning glam session. Get ready for your day with a stunning makeup look.",
         price: 300,
-        image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319713/WhatsApp_Image_2026-03-12_at_12.28.57_PM_1_lsr34b.jpg",
         category: "makeup",
         duration: "1.5 hours",
         includes: ["Wake & Makeup", "Lashes", "Finish"]
@@ -35,7 +35,7 @@ export const services = [
         name: "Wake In",
         description: "Quick wake-up makeup service. Perfect for busy mornings or last-minute events.",
         price: 200,
-        image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319723/WhatsApp_Image_2026-03-12_at_12.28.57_PM_lj5ghx.jpg",
         category: "makeup",
         duration: "45 mins",
         includes: ["Quick Makeup", "Light Lashes"]
@@ -45,7 +45,7 @@ export const services = [
         name: "Light Makeup / Touch Up",
         description: "Light makeup application or touch-up service. Subtle enhancement for any occasion.",
         price: 150,
-        image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319507/WhatsApp_Image_2026-03-12_at_12.44.11_PM_r4uqq8.jpg",
         category: "makeup",
         duration: "30 mins",
         includes: ["Light Makeup", "Touch Up"]
@@ -55,7 +55,7 @@ export const services = [
         name: "Bridal Makeup",
         description: "Complete bridal look including trial session, day-of makeup, and touch-up kit. We create your dream wedding look that lasts all day and night.",
         price: 350,
-        image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319294/WhatsApp_Image_2026-03-12_at_12.29.18_PM_a8msnq.jpg",
         category: "makeup",
         duration: "2 hours",
         includes: ["Trial Session", "Day-of Makeup", "Touch-up Kit", "Lashes"]
@@ -66,7 +66,7 @@ export const services = [
         description: "Professional makeup for bridesmaids. Charged per person - contact for group rates.",
         price: null,
         note: "Price varies by number of people",
-        image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80",
+        image: "https://i.pinimg.com/1200x/e7/6e/d0/e76ed0d0452bafc3eeb67bf0cf9c9105.jpg",
         category: "makeup",
         duration: "1 hour per person",
         includes: ["Makeup Application", "Lashes"]
@@ -77,7 +77,7 @@ export const services = [
         description: "Perfect graduation look! Professional makeup for your special day. Charged per person.",
         price: null,
         note: "Price varies by number of people",
-        image: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80",
+        image: "https://i.pinimg.com/1200x/1c/ef/82/1cef8219f6f1baa928e2779783c39c89.jpg",
         category: "makeup",
         duration: "1 hour per person",
         includes: ["Makeup Application", "Lashes"]
@@ -89,7 +89,7 @@ export const services = [
         name: "Wig Installation - Frontal",
         description: "Professional lace frontal wig installation with a natural, seamless finish.",
         price: 150,
-        image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80",
+        image: "https://i.pinimg.com/1200x/2c/53/df/2c53df5fcee21c949d49aecb92eb0cea.jpg",
         category: "hair",
         duration: "1.5 hours",
         includes: ["Frontal Installation", "Secure Application", "Blending"]
@@ -99,7 +99,7 @@ export const services = [
         name: "Wig Installation - Closure",
         description: "Professional lace closure wig installation for a natural hairline.",
         price: 100,
-        image: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80",
+        image: "https://i.pinimg.com/1200x/38/33/7f/38337f3ef9a407309aedd2a83e87fe73.jpg",
         category: "hair",
         duration: "1.5 hours",
         includes: ["Closure Installation", "Secure Application", "Blending"]
@@ -110,7 +110,7 @@ export const services = [
         description: "Professional wig styling to give your wig a fresh, customized look.",
         price: null,
         note: "Comes with extra cost",
-        image: "https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600&q=80",
+        image: "https://i.pinimg.com/736x/51/03/0b/51030b9cf58d699f3c0ae78c1a2e233d.jpg",
         category: "hair",
         duration: "1 hour",
         includes: ["Wig Styling", "Custom Look"]
@@ -120,7 +120,7 @@ export const services = [
         name: "Wig Revamp",
         description: "Bring your old wig back to life with washing, conditioning, styling, and restructuring.",
         price: 150,
-        image: "https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600&q=80",
+        image: "https://i.pinimg.com/736x/b5/1f/aa/b51faaca43ccd8a0a6917d349632deea.jpg",
         category: "hair",
         duration: "2 hours",
         includes: ["Deep Conditioning", "Steam Treatment", "Restyling", "Finishing"]
@@ -130,7 +130,7 @@ export const services = [
         name: "Wig Sewing - Frontal",
         description: "Professional sewing of lace frontal wigs for secure and long-lasting installation.",
         price: 200,
-        image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80",
+        image: "https://i.pinimg.com/1200x/c9/82/e4/c982e48b1b5594d236e76ac134a43cdb.jpg",
         category: "hair",
         duration: "2 hours",
         includes: ["Frontal Sewing", "Secure Attachment", "Customization"]
@@ -140,7 +140,7 @@ export const services = [
         name: "Wig Sewing - Closure",
         description: "Professional sewing of lace closure wigs for a natural finish.",
         price: 150,
-        image: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80",
+        image: "https://i.pinimg.com/736x/0d/15/cb/0d15cbed78cd3d46ed67c119275fcd65.jpg",
         category: "hair",
         duration: "2 hours",
         includes: ["Closure Sewing", "Secure Attachment", "Customization"]
@@ -152,7 +152,7 @@ export const services = [
         name: "Gel Manicure",
         description: "Long-lasting gel polish that shines for weeks. Perfectly shaped nails with our signature finish.",
         price: 55,
-        image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773320028/WhatsApp_Image_2026-03-12_at_12.29.39_PM_mf3xlg.jpg",
         category: "nails",
         duration: "1 hour",
         includes: ["Nail Shaping", "Cuticle Care", "Gel Polish", "Top Coat"]
@@ -162,7 +162,7 @@ export const services = [
         name: "Acrylic Nails",
         description: "Durable acrylic extensions in any shape and length. From natural to dramatic, we create your dream nails.",
         price: 75,
-        image: "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773320026/WhatsApp_Image_2026-03-12_at_12.29.38_PM_szq6lf.jpg",
         category: "nails",
         duration: "1.5 hours",
         includes: ["Nail Extensions", "Shape & Length", "Gel Polish", "Cuticle Care"]
@@ -172,7 +172,7 @@ export const services = [
         name: "Nail Art",
         description: "Creative nail art designs from subtle accents to full artistic expressions. Express your unique style.",
         price: 35,
-        image: "https://images.unsplash.com/photo-1571290274554-6a2eaa771e5f?w=600&q=80",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773320031/WhatsApp_Image_2026-03-12_at_12.29.38_PM_1_u5cl1i.jpg",
         category: "nails",
         duration: "30 mins",
         includes: ["Design Consultation", "Custom Art", "Premium Products"]
@@ -182,7 +182,7 @@ export const services = [
         name: "Luxury Pedicure",
         description: "Indulgent pedicure experience with massage, exfoliation, and perfect polish. Relax and rejuvenate.",
         price: 65,
-        image: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=600&q=80",
+        image: "https://i.pinimg.com/736x/d9/0c/f0/d90cf0f5816bf8fc393a0a47eb81e305.jpg",
         category: "nails",
         duration: "1 hour",
         includes: ["Foot Spa", "Exfoliation", "Massage", "Polish"]
