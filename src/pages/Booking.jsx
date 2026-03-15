@@ -140,11 +140,11 @@ const Booking = () => {
                 client_email: formData.email,
                 client_phone: formData.phone.replace(/\D/g, ''),
                 service_name: selectedService?.name || 'Not selected',
-                service_price: `GH₵${selectedService?.price || 0}`,
+                service_price: selectedService?.price ? `GH₵${selectedService.price}` : (selectedService?.note || 'Contact for pricing'),
                 
                 // Order details
                 quantity: quantity.toString(),
-                total_price: `GH₵${totalPrice}`,
+                total_price: selectedService?.price ? `GH₵${totalPrice}` : (selectedService?.note || 'Contact for pricing'),
                 shade: orderDetails.shade || 'Not specified',
                 finish: orderDetails.finish,
                 flavor: orderDetails.flavor,
@@ -157,7 +157,7 @@ const Booking = () => {
                 // URL-encoded versions for WhatsApp message
                 whatsapp_name: encodeURIComponent(formData.name),
                 whatsapp_service: encodeURIComponent(selectedService?.name || ''),
-                whatsapp_price: encodeURIComponent(`GH₵${selectedService?.price || 0}`),
+                whatsapp_price: encodeURIComponent(selectedService?.price ? `GH₵${selectedService.price}` : (selectedService?.note || 'Contact for pricing')),
                 whatsapp_quantity: quantity.toString(),
                 whatsapp_delivery: encodeURIComponent(`${shippingInfo.address}, ${shippingInfo.city}`),
                 
@@ -196,7 +196,7 @@ const Booking = () => {
                 client_phone: formData.phone.replace(/\D/g, ''),
                 service_name: selectedService?.name || 'Not selected',
                 service_duration: selectedService?.duration || 'N/A',
-                service_price: `GH₵${totalPrice}`,
+                service_price: selectedService?.price ? `GH₵${totalPrice}` : (selectedService?.note || 'Contact for pricing'),
                 appointment_date: selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not selected',
                 appointment_time: selectedTime || 'Not selected',
                 notes: formData.notes || 'No extra notes',
@@ -211,7 +211,7 @@ const Booking = () => {
                 
                 // Order fields (not applicable for bookings - use placeholders)
                 quantity: '1',
-                total_price: `GH₵${totalPrice}`,
+                total_price: selectedService?.price ? `GH₵${totalPrice}` : (selectedService?.note || 'Contact for pricing'),
                 shade: 'N/A (Service Booking)',
                 finish: 'N/A',
                 flavor: 'N/A',
@@ -222,7 +222,7 @@ const Booking = () => {
                 // URL-encoded versions for WhatsApp message
                 whatsapp_name: encodeURIComponent(formData.name),
                 whatsapp_service: encodeURIComponent(selectedService?.name || ''),
-                whatsapp_price: encodeURIComponent(`GH₵${totalPrice}`),
+                whatsapp_price: encodeURIComponent(selectedService?.price ? `GH₵${totalPrice}` : (selectedService?.note || 'Contact for pricing')),
                 whatsapp_quantity: '1',
                 whatsapp_delivery: encodeURIComponent('N/A (In-Studio Service)')
             };
@@ -242,7 +242,9 @@ const Booking = () => {
             // Fallback to mailto
             let subject, body;
             
-            if (isOrder) {
+            const isLipGloss = selectedService?.category === 'lipgloss';
+            
+            if (isOrder && isLipGloss) {
                 subject = `New Order: ${formData.name} - ${selectedService?.name || 'Lip Gloss'}`;
                 body = `ORDER - Girlies Luxe
 
@@ -257,8 +259,8 @@ Quantity: ${quantity}
 Shade: ${orderDetails.shade || 'Not specified'}
 Finish: ${orderDetails.finish}
 Flavor: ${orderDetails.flavor}
-Price: GH₵${selectedService?.price} each
-Total: GH₵${totalPrice}
+Price: ${selectedService?.price ? `GH₵${selectedService.price} each` : (selectedService?.note || 'Contact for pricing')}
+Total: ${selectedService?.price ? `GH₵${totalPrice}` : (selectedService?.note || 'Contact for pricing')}
 
 SHIPPING
 Address: ${shippingInfo.address}
@@ -279,7 +281,7 @@ Phone: ${formData.phone}
 SERVICE
 Service: ${selectedService?.name || 'Not selected'}
 Duration: ${selectedService?.duration || 'N/A'}
-Price: GH₵${totalPrice}
+Price: ${selectedService?.price ? `GH₵${totalPrice}` : (selectedService?.note || 'Contact for pricing')}
 
 APPOINTMENT
 Date: ${selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not selected'}
@@ -327,7 +329,7 @@ ${formData.notes || 'None'}`;
                                     <span className="text-gray-500">{isOrder ? 'Product:' : 'Service:'}</span>
                                     <span className="font-medium">{selectedService?.name}</span>
                                 </div>
-                                {isOrder && (
+                                {isOrder && selectedService?.category === 'lipgloss' && (
                                     <>
                                         <div className="flex justify-between">
                                             <span className="text-gray-500">Quantity:</span>
@@ -355,7 +357,11 @@ ${formData.notes || 'None'}`;
                                 )}
                                 <div className="flex justify-between border-t pt-2 mt-2">
                                     <span className="text-gray-500">Total:</span>
-                                    <span className="font-semibold text-[#D4AF37]">GH₵{totalPrice}</span>
+                                    {selectedService?.price ? (
+                                        <span className="font-semibold text-[#D4AF37]">GH₵{totalPrice}</span>
+                                    ) : (
+                                        <span className="font-semibold text-[#D4AF37]">{selectedService?.note || 'Contact for pricing'}</span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -474,7 +480,11 @@ ${formData.notes || 'None'}`;
                                                         <div className="flex-1">
                                                             <h3 className="font-playfair text-xl mb-1">{service.name}</h3>
                                                             <p className="text-gray-500 text-sm mb-2">{service.duration}</p>
-                                                            <p className="text-[#D4AF37] font-semibold">GH₵{service.price}</p>
+                                                            {service.price ? (
+                                                                <p className="text-[#D4AF37] font-semibold">GH₵{service.price}</p>
+                                                            ) : (
+                                                                <p className="text-[#D4AF37] font-semibold text-sm">{service.note || 'Contact for pricing'}</p>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </motion.div>
@@ -873,7 +883,7 @@ ${formData.notes || 'None'}`;
                                 )}
 
                                 {/* Show order details in summary if order */}
-                                {isOrder && step >= 2 && (
+                                {isOrder && step >= 2 && selectedService?.category === 'lipgloss' && (
                                     <div className="border-t pt-4 mb-4 space-y-2 text-sm">
                                         <div className="flex justify-between">
                                             <span className="text-gray-500">Quantity:</span>
@@ -917,7 +927,11 @@ ${formData.notes || 'None'}`;
                                     <div className="border-t pt-4">
                                         <div className="flex justify-between items-center">
                                             <span className="font-semibold">Total</span>
-                                            <span className="font-semibold text-[#D4AF37] text-xl">GH₵{totalPrice}</span>
+                                            {selectedService?.price ? (
+                                                <span className="font-semibold text-[#D4AF37] text-xl">GH₵{totalPrice}</span>
+                                            ) : (
+                                                <span className="font-semibold text-[#D4AF37] text-sm">{selectedService?.note || 'Contact for pricing'}</span>
+                                            )}
                                         </div>
                                     </div>
                                 )}

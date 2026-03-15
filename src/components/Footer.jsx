@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { color, motion } from 'framer-motion';
 import { FiInstagram, FiMail, FiPhone, FiMapPin, FiClock } from 'react-icons/fi';
 import { SiTiktok } from 'react-icons/si';
 

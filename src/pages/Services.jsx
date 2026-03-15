@@ -104,9 +104,15 @@ const Services = () => {
                                             <h3 className="font-playfair text-2xl text-gray-900">
                                                 {service.name}
                                             </h3>
-                                            <span className="text-[#D4AF37] font-semibold text-xl">
-                                                GH₵{service.price}
-                                            </span>
+                                            {service.price ? (
+                                                <span className="text-[#D4AF37] font-semibold text-xl">
+                                                    GH₵{service.price}
+                                                </span>
+                                            ) : (
+                                                <span className="text-[#D4AF37] font-semibold text-sm">
+                                                    {service.note || 'Contact for pricing'}
+                                                </span>
+                                            )}
                                         </div>
 
                                         <p className="text-gray-500 mb-4">

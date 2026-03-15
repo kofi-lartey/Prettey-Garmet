@@ -50,38 +50,7 @@ export const services = [
         duration: "30 mins",
         includes: ["Light Makeup", "Touch Up"]
     },
-    {
-        id: 6,
-        name: "Bridal Makeup",
-        description: "Complete bridal look including trial session, day-of makeup, and touch-up kit. We create your dream wedding look that lasts all day and night.",
-        price: 350,
-        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319294/WhatsApp_Image_2026-03-12_at_12.29.18_PM_a8msnq.jpg",
-        category: "makeup",
-        duration: "2 hours",
-        includes: ["Trial Session", "Day-of Makeup", "Touch-up Kit", "Lashes"]
-    },
-    {
-        id: 7,
-        name: "Bridesmaids Makeup",
-        description: "Professional makeup for bridesmaids. Charged per person - contact for group rates.",
-        price: null,
-        note: "Price varies by number of people",
-        image: "https://i.pinimg.com/1200x/e7/6e/d0/e76ed0d0452bafc3eeb67bf0cf9c9105.jpg",
-        category: "makeup",
-        duration: "1 hour per person",
-        includes: ["Makeup Application", "Lashes"]
-    },
-    {
-        id: 8,
-        name: "Graduation Makeup",
-        description: "Perfect graduation look! Professional makeup for your special day. Charged per person.",
-        price: null,
-        note: "Price varies by number of people",
-        image: "https://i.pinimg.com/1200x/1c/ef/82/1cef8219f6f1baa928e2779783c39c89.jpg",
-        category: "makeup",
-        duration: "1 hour per person",
-        includes: ["Makeup Application", "Lashes"]
-    },
+
 
     // WIG SERVICES
     {
@@ -218,6 +187,96 @@ export const services = [
         category: "lipgloss",
         duration: "45 mins",
         includes: ["Lip Exfoliation", "Hydration Treatment", "Custom Lip Gloss", "Lip Care Kit"]
+    },
+
+    // PACKAGES - Bridal, Bridesmaid & Braid Services
+    {
+        id: 22,
+        name: "Bridal Makeup Package",
+        description: "Complete bridal look including trial session, day-of makeup, and touch-up kit. We create your dream wedding look that lasts all day and night.",
+        price: null,
+        note: "Package – price will be available upon order",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319294/WhatsApp_Image_2026-03-12_at_12.29.18_PM_a8msnq.jpg",
+        category: "packages",
+        duration: "2 hours",
+        includes: ["Trial Session", "Day-of Makeup", "Touch-up Kit", "Lashes"]
+    },
+    {
+        id: 23,
+        name: "Standard Bridesmaid Package",
+        description: "Complete bridesmaid styling package for your wedding party. Includes professional makeup application and hairstyling for each bridesmaid.",
+        price: null,
+        note: "Package – price will be available upon order",
+        image: "https://i.pinimg.com/1200x/e7/6e/d0/e76ed0d0452bafc3eeb67bf0cf9c9105.jpg",
+        category: "packages",
+        duration: "Varies by group size",
+        includes: ["Makeup Application", "Lashes", "Hairstyling", "Touch-up Kit"]
+    },
+    {
+        id: 24,
+        name: "Premium Bridesmaid Package",
+        description: "Luxury bridesmaid package with full makeup, premium hairstyling, and optional lip gloss creation for each bridesmaid.",
+        price: null,
+        note: "Package – price will be available upon order",
+        image: "https://i.pinimg.com/1200x/e7/6e/d0/e76ed0d0452bafc3eeb67bf0cf9c9105.jpg",
+        category: "packages",
+        duration: "Varies by group size",
+        includes: ["Full Glam Makeup", "Premium Lashes", "Deluxe Hairstyling", "Custom Lip Gloss", "Touch-up Kit"]
+    },
+    {
+        id: 25,
+        name: "Braid Package - Simple",
+        description: "Elegant simple braid styling for any occasion. Perfect for everyday elegance or casual events.",
+        price: null,
+        note: "Package – price will be available upon order",
+        image: "https://i.pinimg.com/1200x/9d/f8/68/9df868565896a55f7e6c445387b6373e.jpg",
+        category: "packages",
+        duration: "1-2 hours",
+        includes: ["Simple Braid Styling", "Finishing Products"]
+    },
+    {
+        id: 26,
+        name: "Braid Package - Signature",
+        description: "Intricate signature braid designs for a stunning, eye-catching look. Includes cornrows, box braids, or feed-in braids.",
+        price: null,
+        note: "Package – price will be available upon order",
+        image: "https://i.pinimg.com/1200x/87/34/30/8734300df85be0b0839196d02a8e0ba3.jpg",
+        category: "packages",
+        duration: "2-4 hours",
+        includes: ["Signature Braid Design", "Premium Hair Extensions", "Finishing Products", "Care Instructions"]
+    },
+    {
+        id: 27,
+        name: "Braid Package - Deluxe",
+        description: "Ultimate braid experience with complex styling, accessories, and professional finishing. Perfect for special events and photoshoots.",
+        price: null,
+        note: "Package – price will be available upon order",
+        image: "https://i.pinimg.com/736x/07/6d/9c/076d9c0f7ccf2ffd18852daa7e55caf7.jpg",
+        category: "packages",
+        duration: "3-5 hours",
+        includes: ["Deluxe Braid Design", "Premium Extensions", "Accessories", "Professional Finishing", "Hair Care Kit", "Aftercare Guide"]
+    },
+    {
+        id: 28,
+        name: "Graduation Package",
+        description: "Perfect graduation look! Professional makeup for your special day. Create lasting memories with a stunning graduation look.",
+        price: null,
+        note: "Package – price will be available upon order",
+        image: "https://i.pinimg.com/1200x/1c/ef/82/1cef8219f6f1baa928e2779783c39c89.jpg",
+        category: "packages",
+        duration: "Varies by group size",
+        includes: ["Makeup Application", "Lashes", "Touch-up Kit"]
+    },
+    {
+        id: 29,
+        name: "Bridal Party Complete Package",
+        description: "Complete wedding party package including bride's full bridal styling plus bridesmaid packages. Everything for your big day in one seamless package.",
+        price: null,
+        note: "Package – price will be available upon order",
+        image: "https://res.cloudinary.com/djjgkezui/image/upload/v1773319294/WhatsApp_Image_2026-03-12_at_12.29.18_PM_a8msnq.jpg",
+        category: "packages",
+        duration: "Full wedding day",
+        includes: ["Bridal Trial", "Bridal Day-of Makeup", "Bridal Hairstyling", "Bridesmaid Makeup", "Bridesmaid Hairstyling", "Touch-up Kit", "On-site Stylist"]
     }
 ];
 
@@ -226,7 +285,8 @@ export const serviceCategories = [
     { id: "makeup", name: "Makeup" },
     { id: "hair", name: "Wigs & Hair" },
     { id: "nails", name: "Nails" },
-    { id: "lipgloss", name: "Lip Gloss" }
+    { id: "lipgloss", name: "Lip Gloss" },
+    { id: "packages", name: "Packages" }
 ];
 
 // Note: Prices may vary depending on location. Contact for details.

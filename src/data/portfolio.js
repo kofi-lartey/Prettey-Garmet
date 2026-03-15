@@ -154,7 +154,7 @@ export const portfolioItems = [
         id: 21,
         title: "Wig Installation",
         category: "hair",
-        image: "https://i.pinimg.com/1200x/c9/82/e4/c982e48b1b5594d236e76ac134a43cdb.jpg",
+        image: "https://i.pinimg.com/1200x/c9/82/e4/c982e48b1b5594d236e76ac134a43cdb.jpgh",
         description: "Natural lace front wig"
     },
     {
